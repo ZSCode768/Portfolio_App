@@ -29,4 +29,10 @@
     <%= student.graduation_date %>
   </p>
 
+  <% if @student.profile_picture.attached? %>
+    <%= image_tag student.profile_picture, size: "150x150" %>
+  <% else %>
+    <p>No profile picture uploaded.</p>
+  <% end %>
+
 </div>
