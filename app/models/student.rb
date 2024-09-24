@@ -5,27 +5,27 @@ class Student < ApplicationRecord
     validates :major, presence: true
     validates :minor, presence: true
     validates :graduation_date, presence: true
-    has_one_attached :profile_picture
+    has_one_attached :image
+    before_create :set_default_image
     validate :acceptable_image
-    before_create :set_default_profile_picture
 
-    def set_default_profile_picture
-        unless profile_picture.attached?
+    def set_default_image
+        unless image.attached?
             default_image_path = Rails.root.join("app", "assets", "images", "default.png")
-            profile_picture.attach(io: File.open(default_image_path), filename: 'default.png', content_type: 'image/png')
+            image.attach(io: File.open(default_image_path), filename: 'default.png', content_type: 'image/png')
         end
     end
 
     def acceptable_image
-        return unless profile_picture.attached?
-    
-        unless profile_picture.blob.byte_size <= 10.megabyte
-            errors.add(:profile_picture, "is too big")
+        return unless image.attached?
+                  
+        unless image.blob.byte_size <= 10.megabyte
+            errors.add(:image, "file size is too big, must be under 10 MB.")
         end
     
         acceptable_types = ["image/jpeg", "image/png"]
-        unless acceptable_types.include?(profile_picture.content_type)
-            errors.add(:profile_picture, "must be a JPEG or PNG")
+        unless acceptable_types.include?(image.content_type)
+            errors.add(:image, "must be a JPEG or PNG")
         end
     end
 end
