@@ -6,15 +6,15 @@ class Student < ApplicationRecord
     validates :minor, presence: true
     validates :graduation_date, presence: true
     has_one_attached :image
-    before_create :set_default_image
+    # before_create :set_default_image
     validate :acceptable_image
 
-    def set_default_image
-        unless image.attached?
-            default_image_path = Rails.root.join("app", "assets", "images", "default.png")
-            image.attach(io: File.open(default_image_path), filename: 'default.png', content_type: 'image/png')
-        end
-    end
+    # def set_default_image
+    #     unless image.attached?
+    #         default_image_path = Rails.root.join("app", "assets", "images", "default.png")
+    #         image.attach(io: File.open(default_image_path), filename: 'default.png', content_type: 'image/png')
+    #     end
+    # end
 
     def acceptable_image
         return unless image.attached?
