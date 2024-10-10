@@ -16,6 +16,8 @@ class StudentsController < ApplicationController
 
     if @search_params[:major].present?
       @students = @students.where(major: @search_params[:major])
+    else
+      @students = Student.none
     end
   end
 
