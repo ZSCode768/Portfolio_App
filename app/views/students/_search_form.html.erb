@@ -8,4 +8,8 @@
     <div>
         <%=form.submit "Search", class: "btn btn-primary" %>
     </div>
+
+    <div>
+        <%= link_to "Show All",students_path(show_all: true), method: :get, class: "btn btn-secondary" %>
+    </div>
 <% end %>

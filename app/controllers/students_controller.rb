@@ -14,7 +14,9 @@ class StudentsController < ApplicationController
 
     Rails.logger.info "Search Params: #{@search_params.inspect}"
 
-    if @search_params[:major].present?
+    if params[:show_all] == "true"
+      @students = Student.all
+    elsif @search_params[:major].present?
       @students = @students.where(major: @search_params[:major])
     else
       @students = Student.none
