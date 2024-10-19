@@ -4,6 +4,19 @@
         <%=form.select :major, options_for_select(Student::VALID_MAJORS), {prompt: "Select a Major"}, name:'search[major]',
         class: "form-control" %>
     </div>
+    
+    <div>
+        <%=form.label :graduation_date, "Select Before or After the Graduation Date", class: "form-label" %>
+        <%=form.select :graduation_date_compare, options_for_select([['Before', 'before'], ['After', 'after']]), {prompt: "Select Before or After"}, name:'search[graduation_date_compare]',
+        class: "form-control" %>
+    </div>
+
+    <div>
+        <%=form.label :graduation_date, "Graduation Date", class: "form-label" %>
+        <%=form.date_field :graduation_date, name:'search[graduation_date]',
+        class: "form-control" %>
+    </div>
+
 
     <div>
         <%=form.submit "Search", class: "btn btn-primary" %>

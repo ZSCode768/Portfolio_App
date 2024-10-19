@@ -17,9 +17,21 @@ class StudentsController < ApplicationController
     if params[:show_all] == "true"
       @students = Student.all
     elsif @search_params[:major].present?
-      @students = @students.where(major: @search_params[:major])
+      if @search_params[:major] == 'Any Major'
+        @students = Student.all
+      else
+        @students = @students.where(major: @search_params[:major])
+      end
     else
       @students = Student.none
+    end
+
+    if @search_params[:graduation_date].present? && @search_params[:graduation_date_compare].present?
+      if @search_params[:graduation_date_compare] == 'before'
+        @students = @students.where('graduation_date < ?', @search_params[:graduation_date])
+      elsif @search_params[:graduation_date_compare] == 'after'
+        @students = @students.where('graduation_date > ?', @search_params[:graduation_date])
+      end
     end
   end
 
