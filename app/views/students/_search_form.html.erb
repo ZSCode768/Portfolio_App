@@ -59,5 +59,9 @@
             <% end %>
         </tbody>
         </table>
+
+        <% if @students.empty? %>
+            <p class = "alert alert-warning">No students found</p>
+        <% end %>
         </div>
 <% end %>
