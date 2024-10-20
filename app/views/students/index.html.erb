@@ -4,13 +4,15 @@
 
 <%= render 'search_form', search_params: @search_params %>
 
+<!-- Used ERB comments to change back remove # and replace with = except
+at student do and end-->
 <div id="students">
-  <% @students.each do |student| %>
-    <%= render student %>
+  <%# @students.each do |student| %>
+    <%# render student %>
     <p>
-      <%= link_to "Show this student", student %>
+      <%# link_to "Show this student", student %>
     </p>
-  <% end %>
+  <%# end %>
 </div>
 
 <%= link_to "New student", new_student_path %>
