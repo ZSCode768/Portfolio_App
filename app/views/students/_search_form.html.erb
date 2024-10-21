@@ -1,7 +1,8 @@
 <%= form_with(url: students_path, method: :get, local: true, class: "form-inline") do |form|%>
     <div>
         <%=form.label :major, "Select Major", class: "form-label" %>
-        <%=form.select :major, options_for_select(Student::VALID_MAJORS), {prompt: "Select a Major"}, name:'search[major]',
+        <%=form.select :major, options_for_select(["Any Major"] + Student::VALID_MAJORS, 
+        @search_params[:major]), {prompt: "Select a Major"}, name:'search[major]',
         class: "form-control" %>
     </div>
     
