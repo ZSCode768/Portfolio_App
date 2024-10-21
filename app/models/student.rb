@@ -5,7 +5,7 @@ class Student < ApplicationRecord
     validates :major, presence: true
     validates :minor, presence: true
     validates :graduation_date, presence: true
-    has_one_attached :image
+    has_one_attached :image, dependent::purge_later
     # before_create :set_default_image
     validate :acceptable_image
 
