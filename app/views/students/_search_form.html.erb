@@ -1,0 +1,75 @@
+<%= form_with(url: students_path, method: :get, local: true, class: "form-inline") do |form|%>
+    <!-- Actual search function -->
+    <div>
+        <%=form.label :major, "Select Major", class: "form-label" %>
+        <%=form.select :major, options_for_select(["Any Major"] + Student::VALID_MAJORS, 
+        @search_params[:major]), {prompt: "Select a Major"}, name:'search[major]',
+        class: "form-control" %>
+    </div>
+    
+    <!-- Before or After selector -->
+    <div>
+        <%=form.label :graduation_date, "Select Before or After the Graduation Date", class: "form-label" %>
+        <%=form.select :graduation_date_compare, options_for_select([['Before', 'before'], ['After', 'after']]), {prompt: "Select Before or After"}, name:'search[graduation_date_compare]',
+        class: "form-control" %>
+    </div>
+
+    <!-- Grad date Selector -->
+    <div>
+        <%=form.label :graduation_date, "Graduation Date", class: "form-label" %>
+        <%=form.date_field :graduation_date, name:'search[graduation_date]',
+        class: "form-control" %>
+    </div>
+
+    <!-- Search button-->
+    <div>
+        <%=form.submit "Search", class: "btn btn-primary" %>
+    </div>
+
+    <!-- show all button -->
+    <div>
+        <%= link_to "Show All",students_path(show_all: true), method: :get, class: "btn btn-secondary" %>
+    </div>
+
+    <!-- Bootstrap List for search results --> 
+    <div>
+        <h3>Search Results:</h3>
+        <table class="table table-striped table-hover">
+            
+        <thead>
+            <tr>
+            <th>Profile Picture</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Major</th>
+            <th>Graduation Date</th>
+            <th colspan="3">Actions</th>
+            </tr>
+        </thead>
+            <% @students.each do |student| %>
+            <tr>
+                <td>
+                    <% if student.image.attached? %>
+                        <%= image_tag student.image.variant(resize_to_limit:[150, nil]) %>
+                    <% else %>
+                        <%= image_tag("default.png", size: "50x50") %>
+                    <% end %>
+                </td>
+                <td><%= student.first_name %></td>
+                <td><%= student.last_name %></td>
+                <td><%= student.major %></td>
+                <td><%= student.graduation_date.strftime("%b %d, %Y") if student.graduation_date %></td>
+                <td><%= link_to 'Show', student, class: 'btn btn-info btn-sm' %></td>
+                <td><%= link_to 'Edit', edit_student_path(student), class: 'btn btn-warning btn-sm' %></td>
+                <td><%= button_to 'Delete', student, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm' %></td>
+            </tr>
+            <% end %>
+        </tbody>
+        </table>
+        
+        <!-- Show no students -->
+        <% if @students.empty? %>
+            <p class = "alert alert-warning">No students found. Please enter search criteria to find students.</p>
+        <% end %>
+        </div>
+<% end %>

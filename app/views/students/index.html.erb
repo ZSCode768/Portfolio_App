@@ -2,13 +2,22 @@
 
 <h1>Students</h1>
 
+<!-- Provide a summary banner and search form -->
+<div class="d-block p-2 text-bg-primary">Provide a summary</div>
+
+<%= render 'search_form', search_params: @search_params %>
+
+<!-- Used ERB comments to change back remove # and replace with = except
+at student do and end-->
 <div id="students">
-  <% @students.each do |student| %>
-    <%= render student %>
+  <%# @students.each do |student| %>
+    <%# render student %>
     <p>
-      <%= link_to "Show this student", student %>
+      <%# link_to "Show this student", student %>
     </p>
-  <% end %>
+  <%# end %>
 </div>
 
 <%= link_to "New student", new_student_path %>
+
+
