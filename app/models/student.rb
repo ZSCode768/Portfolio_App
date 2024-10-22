@@ -7,20 +7,15 @@ class Student < ApplicationRecord
     validates :graduation_date, presence: true
     has_one_attached :image
     after_destroy :purge_image
-    # before_create :set_default_image
     validate :acceptable_image
 
+    #List of Valid Majors a student or employer can choose
     VALID_MAJORS = ["Computer Engineering BS", "Computer Information Systems BS",
         "Computer Science BS", "Cybersecurity Major", "Data Science and Machine Learning Major"]
 
     validates :major, inclusion: {in: VALID_MAJORS, message: "%{value} is not a valid major"}
-    # def set_default_image
-    #     unless image.attached?
-    #         default_image_path = Rails.root.join("app", "assets", "images", "default.png")
-    #         image.attach(io: File.open(default_image_path), filename: 'default.png', content_type: 'image/png')
-    #     end
-    # end
 
+    #image purger for seeding
     private
     def purge_image
         image.purge_image if image.attached?
