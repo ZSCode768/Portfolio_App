@@ -22,8 +22,6 @@ class StudentsController < ApplicationController
       else
         @students = @students.where(major: @search_params[:major])
       end
-    else
-      @students = Student.none
     end
 
     if @search_params[:graduation_date].present? && @search_params[:graduation_date_compare].present?
@@ -33,7 +31,11 @@ class StudentsController < ApplicationController
         @students = @students.where('graduation_date > ?', @search_params[:graduation_date])
       end
     end
-  end
+
+    if @search_params[:major].blank? && @search_params[:graduation_date].blank?
+      @students = Student.none
+    end
+end
 
   # GET /students/1 or /students/1.json
   def show
