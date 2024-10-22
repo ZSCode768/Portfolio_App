@@ -1,7 +1,12 @@
 class Student < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
     validates :first_name, presence: true
     validates :last_name, presence: true
     # validates :school_email, presence: true, uniqueness: true, format: {with: /\A[\w+\-.]+@msudenver\.edu\z/i, message: "Must be an @msudenver.edu email!"}
+    validate :email_format
     validates :major, presence: true
     validates :minor, presence: true
     validates :graduation_date, presence: true
@@ -19,6 +24,12 @@ class Student < ApplicationRecord
     private
     def purge_image
         image.purge_image if image.attached?
+    end
+
+    def email_format
+        unless email =~ /\A[\w+\-.]+@msudenver\.edu\z/i
+            errors.add(:email, "Must be an @musdenver.edu email address")
+        end
     end
 
     def acceptable_image
