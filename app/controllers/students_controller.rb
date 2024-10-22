@@ -97,6 +97,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def student_params
-      params.require(:student).permit(:first_name, :last_name, :school_email, :major, :minor, :graduation_date, :image)
+      params.require(:student).permit(:first_name, :last_name, #:school_email,
+       :major, :minor, :graduation_date, :image)
     end
 end
